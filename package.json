@@ -1,0 +1,25 @@
+{
+  "name": "basic-neutrino",
+  "version": "1.0.0",
+  "description": "an example of neutrino setup",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "neutrino build",
+    "start": "neutrino start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "neutrino",
+    "example"
+  ],
+  "author": "Valentin Vago <zeropaper@irata.ch>",
+  "license": "MIT",
+  "devDependencies": {
+    "neutrino": "^7.3.2",
+    "neutrino-preset-airbnb-base": "^7.3.2",
+    "neutrino-preset-web": "^7.3.2"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
