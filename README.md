@@ -62,7 +62,10 @@
   ```
   In order to find additional configuration you will have to
   *R*ead *T*he *F*ine *M*anual (starting at https://neutrino.js.org/presets/neutrino-preset-web/ )
-- if you need to customize the HTML even further, you may want to find the template which used by Neutrino / Webpack to render the index.html
+
+<detail><summary>Advanced HTML template</summary>
+
+If you need to customize the HTML even further, you may want to find the template which used by Neutrino / Webpack to render the index.html
   It took me a bit of time but after following the white rabbit.
   I first looked at the `neutrino-middleware-html-template` (which was mentioned in the docs of the `neutrino-preset-web`).  
   This lead me to the `html-webpack-template` module and I found the 
@@ -89,4 +92,31 @@
   ```
 - Make changes in the template (be careful with what you change though)
 - restart your server
-- 
+
+</detail>
+
+# Adding Bootstrap and SASS loader
+
+- install the loader which will allows you to use SASS as development dependency `npm i -D neutrino-middleware-styles-loader`
+  (I had to search for that one the other ones were not working correctly)
+- `npm i popper.js bootstrap@next`
+- add the styles loader to your `.neutrinorc.js`:
+  ```js
+    module.exports = {
+    use: [
+      ['neutrino-preset-airbnb-base'],
+      ['neutrino-middleware-styles-loader'],
+      [
+        'neutrino-preset-web',
+        {
+          html: {
+            title: 'My App',
+          }
+        }
+      ],
+    ]
+  };
+  ```
+- in your `src/index.js` 
+  change `import 'styles.css';` to `import 'styles.scss';` and rename your style file accordingly
+- if compilation is not working, you might need to install sass-loader and node-sass: `npm i -D sass-loader node-sass`
