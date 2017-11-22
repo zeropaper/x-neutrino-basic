@@ -1,5 +1,6 @@
-@import '~bootstrap/scss/bootstrap';
+@import './custom-bootstrap';
 
-body {
-  background-color: pink;
+.shop-products-row {
+  margin-top: 2vmin;
+  margin-bottom: 2vmin;
 }
