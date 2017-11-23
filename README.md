@@ -145,7 +145,9 @@ In order to complete the exercise you should look at the Bootstrap documentation
     - It must have a background color
     - Use the full height
     - A padding equivalent to the half of grid gutter width bootstrap variable
-  - 1 block with an image
+  - 1 block with an image which keeps its original proportions
 - The first and third slides must have the text block on the left and their texts aligned on the right
 - The second and fourth slide must have the text block on the right and their texts aligned on the left
 - The indicators must be circles of 15px radius and use the bootstrap primary color
+
+![image](https://user-images.githubusercontent.com/65971/33160695-a6e1d4fc-d01e-11e7-9c05-853c27d546c4.png)
