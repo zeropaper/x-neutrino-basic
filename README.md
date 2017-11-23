@@ -63,7 +63,8 @@
   In order to find additional configuration you will have to
   *R*ead *T*he *F*ine *M*anual (starting at https://neutrino.js.org/presets/neutrino-preset-web/ )
 
-<detail><summary>Advanced HTML template</summary>
+<details><summary>Advanced HTML template</summary>
+
 
 If you need to customize the HTML even further, you may want to find the template which used by Neutrino / Webpack to render the index.html
   It took me a bit of time but after following the white rabbit.
@@ -93,7 +94,8 @@ If you need to customize the HTML even further, you may want to find the templat
 - Make changes in the template (be careful with what you change though)
 - restart your server
 
-</detail>
+
+</details>
 
 # Adding Bootstrap and SASS loader
 
