@@ -120,3 +120,32 @@ If you need to customize the HTML even further, you may want to find the templat
 - in your `src/index.js` 
   change `import 'styles.css';` to `import 'styles.scss';` and rename your style file accordingly
 - if compilation is not working, you might need to install sass-loader and node-sass: `npm i -D sass-loader node-sass`
+
+# Exercise
+
+In order to complete the exercise you should look at the Bootstrap documentation for
+- the carousel component
+- the flex utilities
+- the spacing utilities
+
+## Navbar
+
+- Must use the dark theme
+- 2 menu points, the last one being active
+
+## Custom carousel component
+
+- Add a carousel component with a height of half the height of the viewport but not less than 200px
+- The carousel must have 4 slides
+- Each slide must be split in 2 equally wide blocks
+  - 1 block with:
+    - A title
+    - A short text
+    - A button
+    - It must have a background color
+    - Use the full height
+    - A padding equivalent to the half of grid gutter width bootstrap variable
+  - 1 block with an image
+- The first and third slides must have the text block on the left and their texts aligned on the right
+- The second and fourth slide must have the text block on the right and their texts aligned on the left
+- The indicators must be circles of 15px radius and use the bootstrap primary color
