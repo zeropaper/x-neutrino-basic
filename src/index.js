@@ -2,7 +2,16 @@ import $ from 'jquery';
 import 'bootstrap/js/src';
 import './styles.scss';
 import navbar from './templates/navbar.html';
+import carousel from './templates/carousel.html';
 
+/**
+ * Carousel
+ */
+
+
+/**
+ * Products
+ */
 const pictures = [
   'kitten-2.jpg',
   'kitten-little.jpg',
@@ -44,5 +53,7 @@ const grid = `
 $(() => {
   $('#root')
     .append(navbar)
+    .append(carousel)
     .append(grid);
+  $('.carousel').carousel();
 });

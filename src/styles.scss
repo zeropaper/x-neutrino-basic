@@ -1,6 +1,26 @@
 @import './custom-bootstrap';
 
-.shop-products-row {
-  margin-top: 2vmin;
-  margin-bottom: 2vmin;
+.shop-{
+  &products-row {
+    margin-top: $grid-gutter-width * 0.5;
+    margin-bottom: $grid-gutter-width * 0.5;
+  }
+
+  &carousel {
+    height: 50vh;
+    min-height: 200px;
+
+    .carousel-indicators li {
+      border-radius: $carousel-indicator-width;
+    }
+
+    &-description {
+      background-color: green;
+      padding: $grid-gutter-width * 0.5;
+    }
+    &-image {
+      background-color: yellow;
+    }
+  }
 }
+
