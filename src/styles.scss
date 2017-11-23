@@ -18,6 +18,9 @@
       padding: $grid-gutter-width * 0.5;
     }
     &-image {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
 }
