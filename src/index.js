@@ -4,7 +4,19 @@ import './styles.scss';
 import navbarTemplate from './templates/navbar.html';
 import mkCarousel from './carousel';
 
+
+function updateNavbar(categories) {
+  const $navbarNav = $('.navbar-nav').empty();
+  categories.forEach((category) => {
+    $navbarNav.append(`<li class="nav-item">
+      <a class="nav-link" href="#">${category.name}</a>
+    </li>`);
+  });
+}
+
 $(() => {
+  $('#root').append(navbarTemplate);
+
   $.ajax('./static/categories.json')
     .done((categories) => {
       const $carousel = mkCarousel(categories);
@@ -14,7 +26,6 @@ $(() => {
       // we need to initialize the
       // Bootstrap carousel ourselves
       $carousel.carousel();
+      updateNavbar(categories);
     });
-
-  $('#root').append(navbarTemplate);
 });
