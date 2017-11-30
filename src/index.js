@@ -3,6 +3,7 @@ import 'bootstrap/js/src';
 import './styles.scss';
 import navbarTemplate from './templates/navbar.html';
 import mkCarousel from './carousel';
+import mkProductsGrid from './products-grid';
 
 
 function updateNavbar(categories) {
@@ -27,5 +28,11 @@ $(() => {
       // Bootstrap carousel ourselves
       $carousel.carousel();
       updateNavbar(categories);
+    });
+
+  $.ajax('./static/products.json')
+    .done((products) => {
+      const $productsGrid = mkProductsGrid(products);
+      $('#root').append($productsGrid);
     });
 });
