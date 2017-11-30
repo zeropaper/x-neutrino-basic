@@ -1,13 +1,16 @@
-const path = require('path');
-
 module.exports = {
+  // aimed to be able to publish on GH pages
+  options: {
+    output: 'docs'
+  },
+
   use: [
     ['neutrino-preset-airbnb-base'],
+    ['neutrino-middleware-styles-loader'],
     [
       'neutrino-preset-web',
       {
         html: {
-          template: path.join(__dirname, 'src/html.template.ejs'),
           title: 'My App',
         }
       }

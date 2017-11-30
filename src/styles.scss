@@ -1,0 +1,27 @@
+@import './custom-bootstrap';
+
+.shop-{
+  &product {
+    margin-top: $grid-gutter-width * 0.5;
+    margin-bottom: $grid-gutter-width * 0.5;
+  }
+
+  &carousel {
+    height: 50vh;
+    min-height: 200px;
+
+    .carousel-indicators li {
+      border-radius: $carousel-indicator-width;
+    }
+
+    &-description {
+      padding: $grid-gutter-width * 0.5;
+    }
+    &-image {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}
+

@@ -1,23 +1,38 @@
 import $ from 'jquery';
-import './styles.css';
+import 'bootstrap/js/src';
+import './styles.scss';
+import navbarTemplate from './templates/navbar.html';
+import mkCarousel from './carousel';
+import mkProductsGrid from './products-grid';
 
-const template = `
-<header>
-  <a href="/">
-    <img src="static/vf.icon.svg" alt="logo" />
-  </a>
-  <ul></ul>
-</header>
 
-<main>
-
-</main>
-
-<footer>
-  made with ♥
-</footer>
-`;
+function updateNavbar(categories) {
+  const $navbarNav = $('.navbar-nav').empty();
+  categories.forEach((category) => {
+    $navbarNav.append(`<li class="nav-item">
+      <a class="nav-link" href="#">${category.name}</a>
+    </li>`);
+  });
+}
 
 $(() => {
-  $('#root').html(template);
+  $('#root').append(navbarTemplate);
+
+  $.ajax('./static/categories.json')
+    .done((categories) => {
+      const $carousel = mkCarousel(categories);
+      $('#root').append($carousel);
+      // because the HTML of the carousel
+      // is added after the page loads,
+      // we need to initialize the
+      // Bootstrap carousel ourselves
+      $carousel.carousel();
+      updateNavbar(categories);
+    });
+
+  $.ajax('./static/products.json')
+    .done((products) => {
+      const $productsGrid = mkProductsGrid(products);
+      $('#root').append($productsGrid);
+    });
 });
