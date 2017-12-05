@@ -9,6 +9,7 @@ function mkIndicator(number) {
 function mkSlide(item) {
   const $el = $(carouselItemTemplate);
   $el.find('h2').text(item.name);
+  $el.find('a').attr('href', `#${item.name}`);
   return $el;
 }
 
