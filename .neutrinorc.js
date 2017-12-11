@@ -5,13 +5,19 @@ module.exports = {
   },
 
   use: [
-    ['neutrino-preset-airbnb-base'],
-    ['neutrino-middleware-styles-loader'],
+    ['@neutrinojs/airbnb-base'],
     [
-      'neutrino-preset-web',
+      '@neutrinojs/web',
       {
+        style: {
+          loaders: [
+            {
+              loader: 'sass-loader',
+            }
+          ]
+        },
         html: {
-          title: 'My App',
+          title: 'My App'
         }
       }
     ],

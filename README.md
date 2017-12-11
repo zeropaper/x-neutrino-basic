@@ -1,12 +1,12 @@
 - Create a repository on GitHub (https://github.com/new) and clone it locally
 - `npm init` (will create the package.json)
 - When asked use 'src/index.js' as entry point
-- Install the neutrino dev dependencies: `npm i -D neutrino neutrino-preset-web`
+- Install the neutrino dev dependencies: `npm i -D neutrino @neutrinojs/web`
 - Inside your project folder, create a folder called `src` with a `index.js` inside it
 - Edit the `package.json` file and add the `start` and `build` scripts like
   ```
-  "build": "neutrino build --use neutrino-preset-web",
-  "start": "neutrino start --use neutrino-preset-web",
+  "build": "neutrino build --use @neutrinojs/web",
+  "start": "neutrino start --use @neutrinojs/web",
   ```
 - Run the server with `npm run start` (or actually just `npm start`)
 - Check that everything went smoothly in your browser
@@ -29,15 +29,15 @@
 ## Linting your code and use Neutrino configuration file
 
 - Linting is your friend! It will help you keeping pretty code and enforce best practices.
-  add the `neutrino-preset-airbnb-base` (as dev dependency) with
-  `npm i -D neutrino-preset-airbnb-base`
-- Remove the `--use neutrino-preset-web` from your `package.json`
+  add the `@neutrinojs/airbnb-base` (as dev dependency) with
+  `npm i -D @neutrinojs/airbnb-base`
+- Remove the `--use @neutrinojs/web` from your `package.json`
 - Create a file called `.neutrinorc.js` at the root of your project with the following content:
   ```js
   module.exports = {
     use: [
-      ['neutrino-preset-airbnb-base'], // first the linting!
-      ['neutrino-preset-web'], // then the compilation
+      ['@neutrinojs/airbnb-base'], // first the linting!
+      ['@neutrinojs/web'], // then the compilation
     ],
   };
   ```
@@ -55,9 +55,9 @@
   ```js
   module.exports = {
     use: [
-      ['neutrino-preset-airbnb-base'],
+      ['@neutrinojs/airbnb-base'],
       [
-        'neutrino-preset-web',
+        '@neutrinojs/web',
         {
           html: {
             title: 'My App'
@@ -68,14 +68,14 @@
   };
   ```
   In order to find additional configuration you will have to
-  **R**ead **T**he **F**ine **M**anual (starting at https://neutrino.js.org/presets/neutrino-preset-web/ )
+  **R**ead **T**he **F**ine **M**anual (starting at https://neutrino.js.org/presets/@neutrinojs/web/ )
 
 <details><summary>Advanced HTML template</summary>
 
 
 If you need to customize the HTML even further, you may want to find the template which used by Neutrino / Webpack to render the index.html
   It took me a bit of time but after following the white rabbit.
-  I first looked at the `neutrino-middleware-html-template` (which was mentioned in the docs of the `neutrino-preset-web`).  
+  I first looked at the `@neutrinojs/html-template` (which was mentioned in the docs of the `@neutrinojs/web`).  
   This lead me to the `html-webpack-template` module and I found the 
   template here: https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
 - Copy the `.ejs` file in your `src` directory (rename it if you want, I did it and called it `html.template.ejs`)
@@ -85,9 +85,9 @@ If you need to customize the HTML even further, you may want to find the templat
 
   module.exports = {
     use: [
-      ['neutrino-preset-airbnb-base'],
+      ['@neutrinojs/airbnb-base'],
       [
-        'neutrino-preset-web',
+        '@neutrinojs/web',
         {
           html: {
             template: path.join(__dirname, 'src/html.template.ejs'),
@@ -106,20 +106,26 @@ If you need to customize the HTML even further, you may want to find the templat
 
 ## Adding Bootstrap and SASS loader
 
-- Install the loader which will allows you to use SASS as development dependency `npm i -D neutrino-middleware-styles-loader`
-  (I had to search for that one the other ones were not working correctly)
-- `npm i popper.js bootstrap@next`
-- Add the styles loader to your `.neutrinorc.js`:
+- Inorder to load and compile SASS file you will need to install the `node-sass` and `sass-loader` as development dependency as follow: `npm i -D node-sass sass-loader`
+- Then add bootstrap 4 (at the time of writting this tutorial it is still in beta and therefore needs the `@next`) using the following command: `npm i popper.js bootstrap@next`
+- Add the styles loader to your `.neutrinorc.js`
+  (as described in ):
   ```js
     module.exports = {
     use: [
-      ['neutrino-preset-airbnb-base'],
-      ['neutrino-middleware-styles-loader'],
+      ['@neutrinojs/airbnb-base'],
       [
-        'neutrino-preset-web',
+        '@neutrinojs/web',
         {
+          style: {
+            loaders: [
+              {
+                loader: 'sass-loader',
+              }
+            ]
+          },
           html: {
-            title: 'My App',
+            title: 'My App'
           }
         }
       ],
@@ -128,8 +134,6 @@ If you need to customize the HTML even further, you may want to find the templat
   ```
 - In your `src/index.js` 
   change `import 'styles.css';` to `import 'styles.scss';` and rename your style file accordingly
-- **If compilation is not working:** you might need to install sass-loader and node-sass: `npm i -D sass-loader node-sass`
-
 
 ## Loading HTML templates
 
