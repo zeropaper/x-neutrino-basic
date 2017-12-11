@@ -186,3 +186,263 @@ In order to complete the exercise you should look at the Bootstrap documentation
 - The indicators must be circles of 15px radius and use the bootstrap primary color
 
 ![image](https://user-images.githubusercontent.com/65971/33160695-a6e1d4fc-d01e-11e7-9c05-853c27d546c4.png)
+
+
+## AJAX loading of catalogue
+
+- go to https://github.com/zeropaper/x-neutrino-basic/tree/exercise-carousel (the exercise-carousel branch)
+- Click the "Clone or download" (green button) and then "Download ZIP"
+- In your (local) repository, create a new branch `git checkout -b ajax`
+- Remove the `src` directory of your repository and put the one from the `.zip` file instead
+- Change the `import navbar from './templates/navbar.html';`
+  to `import navbarTemplate from './templates/navbar.html';`
+  That way, it is clearer what the variable is.
+  Don't forget to change the name of the variable at the end of the file (where it is `append()`).
+- Do the same renaming for the `carousel` import.
+- Remove the "Products" (grid) part (and again... don't forget to remove it from the end of the file where it is `append()`).
+- It doesn't hurt to make a commit (so you can get back to it if you skrew up things).
+- Open your `src/templates/carousel.html` file, select the HTML of 1 `.carousel-item` and paste it in a new file called `carousel-item.html` (in the `templates` directory, obviously ;) )
+- Clean the `carousel-item.html` from the texts
+  - Remove the `active` class (important!)
+  - In the `h2` tag for instance
+  - Remove the `style` attribute from the `.shop-carousel-image` element
+- Now we have to remove the content of the `.carousel-inner` of the `carousel.html` file.
+- In the `index.js` create a function called `mkCarousel` which takes 1 argument called `items`. The function creates a jQuery object based on the `carouselTemplate` and returns it.
+- We need an other function to create indicators, we call it `mkIndicator` and it takes 1 argument called `number` and return a jQuery element suitable for the Bootstrap carousel.
+  ```js
+  function mkIndicator(number) {
+    // note that we use "template literal" here!
+    return $(`<li data-target="#carousel-indicators" data-slide-to="${number}"></li>`);
+  }
+  ```
+- One more function is needed (it's the last one for now, promised...) to create the "slides", let's call it `mkSlide` and it takes 1 argument called `item`.
+  The function creates a jQuery object (and returns it) based on the `carouselItemTemplate` which you have to import at the top of your file.
+- In order to test our script we need some "dummy data" and for that we create an array like this:
+  ```js
+  const categories = [
+    { name: 'First' },
+    { name: 'Second' },
+  ];
+  ```
+- Let's use the `mkCarousel()` function to create the jQuery carousel called `$carousel` (just before `$('#root')` piece).
+- We replace the `.append(carouselTemplate)` with `.append($carousel)`
+- We can also replace `$('.carousel').carousel();` with `$carousel.carousel();`.
+- Inside the `mkCarousel()` function
+  - We keep a reference of the elements in which we will put things into (if you didn't removed the content of the `.carousel-indicators` in the `carousel.html`, do it ;) )
+  - We iterate (with `items.forEach((item, number) => {})`) to create
+    - The `$indicator` (with `mkIndicator(number)`)
+    - The `$slide` (with `mkSlide(item)`)
+    - We test if the `number` argument is equal to `0` and if this is the case we add the `active` class to `$indicator` and `$slide`
+    - Finally we append `$indicator` to `$indicators` and `$slide` to `$slides`
+- In the `mkSlide()` function we need to use the `item` argument to change the text of the `h2` located inside the jQuery element we created with the template.
+- Now we create a dummy JSON file with called `categories.json` in the `src/static` directory with the following content:
+  ```json
+  [
+    {
+      "id": 0,
+      "name": "PC"
+    },
+    {
+      "id": 1,
+      "name": "Laptop"
+    },
+    {
+      "id": 2,
+      "name": "Mac"
+    }
+  ]
+  ```
+- In the `index.js` we use the `$.ajax()` function to load the JSON file we just created like that:
+  ```js
+  $.ajax('./static/categories.json')
+    .done((categories) => {
+      /* ... */
+    });
+  ```
+  and make changes so that the end of the file looks like:
+  ```js
+  $(() => {
+    $.ajax('./static/categories.json')
+      .done((categories) => {
+        const $carousel = mkCarousel(categories);
+        $('#root').append($carousel);
+        // because the HTML of the carousel is added after the page loads, we need to initialize the Bootstrap carousel ourselves
+        $carousel.carousel();
+      });
+
+    $('#root').append(navbarTemplate);
+  });
+  ```
+- Now let's refactor a bit
+  - Move the whole carousel related script in a new file called `carousel.js` (in the `src` directory, of course)
+  - You need to export the `mkCarousel()` function like:
+    ```js
+    export default function mkCarousel(items) {
+      // ...
+    }
+    ```
+  - Import the `mkCarousel()` function in `index.js` using `import mkCarousel from './carousel';`
+  
+## Further development
+
+The instructions are available as video
+
+- https://www.youtube.com/watch?v=Bq4IRmdZHz4&list=PLgCgU6ZYAzeOWGnB1_yL7-IrQh4oKH-c2&index=1
+- https://www.youtube.com/watch?v=KHbYxKi0sUI&list=PLgCgU6ZYAzeOWGnB1_yL7-IrQh4oKH-c2&index=2
+
+<details><summary>products.json</summary>
+
+```json
+[
+{
+  "id": 0,
+  "name": "Dell 1000",
+  "price": 500,
+  "category_id": 0
+},
+{
+  "id": 1,
+  "name": "Dell 2000",
+  "price": 600,
+  "category_id": 0,
+  "highlight": true
+},
+{
+  "id": 2,
+  "name": "Dell 3000",
+  "price": 700,
+  "category_id": 0
+},
+{
+  "id": 3,
+  "name": "Dell 4000",
+  "price": 800,
+  "category_id": 0
+},
+{
+  "id": 4,
+  "name": "HP Workstation 1",
+  "price": 350,
+  "category_id": 0
+},
+{
+  "id": 5,
+  "name": "HP Workstation 2",
+  "price": 450,
+  "category_id": 0
+},
+{
+  "id": 6,
+  "name": "HP Workstation 3",
+  "price": 550,
+  "category_id": 0,
+  "highlight": true
+},
+{
+  "id": 7,
+  "name": "HP Workstation 4",
+  "price": 650,
+  "category_id": 0
+},
+{
+  "id": 8,
+  "name": "HP Probook 1100",
+  "price": 450,
+  "category_id": 1
+},
+{
+  "id": 9,
+  "name": "HP Probook 2100",
+  "price": 550,
+  "category_id": 1,
+  "highlight": true
+},
+{
+  "id": 10,
+  "name": "HP Probook 3100",
+  "price": 650,
+  "category_id": 1
+},
+{
+  "id": 11,
+  "name": "HP Probook 4100",
+  "price": 750,
+  "category_id": 1
+},
+{
+  "id": 12,
+  "name": "Sony Vaio x1",
+  "price": 750,
+  "category_id": 1,
+  "highlight": true
+},
+{
+  "id": 13,
+  "name": "Sony Vaio x2",
+  "price": 850,
+  "category_id": 1
+},
+{
+  "id": 14,
+  "name": "Sony Vaio x3",
+  "price": 950,
+  "category_id": 1
+},
+{
+  "id": 15,
+  "name": "Sony Vaio x4",
+  "price": 1050,
+  "category_id": 1
+},
+{
+  "id": 16,
+  "name": "MacBook Pro 1",
+  "price": 1150,
+  "category_id": 2
+},
+{
+  "id": 17,
+  "name": "MacBook Pro 2",
+  "price": 1250,
+  "category_id": 2,
+  "highlight": true
+},
+{
+  "id": 18,
+  "name": "MacBook Pro 3",
+  "price": 1350,
+  "category_id": 2
+},
+{
+  "id": 19,
+  "name": "MacBook Pro 4",
+  "price": 1450,
+  "category_id": 2
+},
+{
+  "id": 20,
+  "name": "MacBook Pro 5",
+  "price": 1550,
+  "category_id": 2
+},
+{
+  "id": 21,
+  "name": "MacBook Pro 6",
+  "price": 1650,
+  "category_id": 2
+},
+{
+  "id": 22,
+  "name": "MacBook Pro 7",
+  "price": 1750,
+  "category_id": 2
+},
+{
+  "id": 23,
+  "name": "MacBook Pro 8",
+  "price": 1850,
+  "category_id": 2
+}]
+```
+
+</details>
