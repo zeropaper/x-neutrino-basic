@@ -446,3 +446,36 @@ The instructions are available as video
 ```
 
 </details>
+
+## Express server
+
+Usually you would have 2 different projects (and repositories) for the back-end and the front-end.
+
+We will do it differently and keep both in one repository.
+
+- We need to add express to the dependencies `npm i -S express`
+- Add `nodemon` to ease our development (`npm i -D nodemon`)
+- Add some scripts to the `package.json`:
+  ```
+  "scripts": {
+    "start-express": "NODE_ENV=production node src/server/app.js",
+    "start-express-dev": "nodemon -w src/server src/server/app.js",
+  ```
+  The `start-express` script runs the app in "production" and
+  the `start-express-dev` runs and restart your app when changes
+  in `src/server` are detected.
+- The `src/index.js` also needs to be changed because the built version should load the JSON data from somewhere else (our express app API) and to do that we create a function:
+  ```js
+  function APIEndpoint(name) {
+    // neutrino will replace the following NODE_ENV
+    // when using "npm run build" with "production"
+    // when using "npm run start" with "development"
+    return process.env.NODE_ENV === 'production' ?
+      `/api/${name}` :
+      `./static/${name}.json`;
+  }
+  ```
+  and change the `$.ajax()` calls
+  ```js
+  $.ajax(APIEndpoint('categories')) // and products too 😉
+  ```

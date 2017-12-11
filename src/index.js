@@ -58,20 +58,28 @@ function mkPageContent() {
   }
 }
 
+function APIEndpoint(name) {
+  // neutrino will replace the following NODE_ENV
+  // when using "npm run build" with "production"
+  // when using "npm run start" with "development"
+  return process.env.NODE_ENV === 'production' ?
+    `/api/${name}` :
+    `./static/${name}.json`;
+}
 
 $(() => {
   $('#root')
     .append(navbarTemplate)
     .append($pageContent);
 
-  $.ajax('./static/categories.json')
+  $.ajax(APIEndpoint('categories'))
     .done((data) => {
       categories = data;
       updateNavbar(categories);
       mkPageContent();
     });
 
-  $.ajax('./static/products.json')
+  $.ajax(APIEndpoint('products'))
     .done((data) => {
       products = data;
       mkPageContent();

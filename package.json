@@ -9,6 +9,8 @@
   "scripts": {
     "build": "neutrino build",
     "start": "neutrino start",
+    "start-express": "NODE_ENV=production node src/server/app.js",
+    "start-express-dev": "nodemon -w src/server src/server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -33,10 +35,12 @@
     "@neutrinojs/web": "^8.0.10",
     "neutrino": "^8.0.10",
     "node-sass": "^4.7.2",
+    "nodemon": "^1.12.5",
     "sass-loader": "^6.0.6"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
+    "express": "^4.16.2",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.9"
   }
