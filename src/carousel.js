@@ -1,11 +1,16 @@
+//  import common stuff
 import $ from 'jquery';
+
+//  import templates
 import carouselTemplate from './templates/carousel.html';
 import carouselItemTemplate from './templates/carousel-item.html';
 
+//  create carousel indicator
 function mkIndicator(number) {
   return $(`<li data-target="#carousel-indicators" data-slide-to="${number}"></li>`);
 }
 
+//  create slide
 function mkSlide(item) {
   const $el = $(carouselItemTemplate);
   $el.find('h2').text(item.name);
@@ -31,6 +36,7 @@ export default function mkCarousel(items) {
 
     $indicators.append($indicator);
     $slides.append($slide);
+    $slide.css('background-image', `url(static/assets/images/0${number}.jpg)`);
   });
 
   return $el;

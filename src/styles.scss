@@ -1,11 +1,11 @@
 @import './custom-bootstrap';
 
-.shop-{
-  &product {
-    margin-top: $grid-gutter-width * 0.5;
-    margin-bottom: $grid-gutter-width * 0.5;
-  }
+.card {
+  margin-top: $grid-gutter-width * 0.5;
+  margin-bottom: $grid-gutter-width * 0.5;
+}
 
+.shop- {
   &carousel {
     height: 50vh;
     min-height: 200px;
@@ -16,6 +16,10 @@
 
     &-description {
       padding: $grid-gutter-width * 0.5;
+      h2 {
+        color: $white;
+        text-align: center;
+      }
     }
     &-image {
       background-size: cover;
@@ -25,3 +29,32 @@
   }
 }
 
+.carousel {
+  margin-top: 55px;
+}
+.carousel-item {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.infobox {
+  margin: 50px 20px;
+}
+
+.bg-light {
+    background-color: transparent !important;
+}
+
+.modal-lorem, .modal-total {
+  margin: 20px;
+}
+
+.modal-content img {
+  margin: 10px auto;
+  max-width:80%;
+}
+
+.shopping-cart {
+
+}

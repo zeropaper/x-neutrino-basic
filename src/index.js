@@ -2,6 +2,7 @@ import $ from 'jquery';
 import 'bootstrap/js/src';
 import './styles.scss';
 import navbarTemplate from './templates/navbar.html';
+import modalTemplate from './templates/modal.html';
 import mkCarousel from './carousel';
 import mkProductsGrid from './products-grid';
 
@@ -62,6 +63,7 @@ function mkPageContent() {
 $(() => {
   $('#root')
     .append(navbarTemplate)
+    .append(modalTemplate)
     .append($pageContent);
 
   $.ajax('./static/categories.json')
@@ -69,12 +71,20 @@ $(() => {
       categories = data;
       updateNavbar(categories);
       mkPageContent();
+    })
+    //  or fail trying
+    .fail((xhr, status, error) => {
+      $('#root').append(`<div>Ajax Error categories: ${error}</div>`);
     });
 
   $.ajax('./static/products.json')
     .done((data) => {
       products = data;
       mkPageContent();
+    })
+    //  or fail trying
+    .fail((xhr, status, error) => {
+      $('#root').append(`<div>Ajax Error products: ${error}</div>`);
     });
 
   $(window).on('hashchange', mkPageContent);
